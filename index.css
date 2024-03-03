@@ -15,6 +15,14 @@ h2{
   display:flex;
   align-items:center;
   justify-content:center;
+
+
+background-color: #4cb67926;
+    background-image: radial-gradient(circle closest-side, #a3dd9133 61%, transparent 62%), radial-gradient(circle closest-side, transparent 85%, rgb(207 248 178 / 43%) 86%, rgba(255, 255, 255, 1) 99%, transparent 100%), radial-gradient(circle closest-side, transparent 85%, rgba(255, 255, 255, 1) 86%, rgb(89 200 135 / 19%) 99%, transparent 100%);
+    background-size: 100px 100px, 100px 50px, 50px 100px;
+    background-position: 0px 0px;
+
+ 
 }
 .card{
   margin:0 30px;
