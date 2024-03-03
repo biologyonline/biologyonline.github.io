@@ -219,6 +219,7 @@ background-color: #4cb67926;
 .medium{
   color:white;
   background-color:#4aa972; 
+  padding: 5px 5px;
 }
 
 #hulk>.card-text>div>div:last-child {
