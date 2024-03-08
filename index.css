@@ -329,6 +329,7 @@
      width: calc(100% - 20px);
      width: 80%;
      margin-bottom: 25px;
+        min-height: inherit;
    }
  }
 
