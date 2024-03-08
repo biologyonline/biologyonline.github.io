@@ -168,3 +168,25 @@
         border-bottom-color: #0000;
     }
 }
+
+
+
+
+
+
+
+
+.contact-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+.svg-container {
+    width: 80%;
+    max-width: 704.248px; /* Set the maximum width of the SVG container */
+}
+svg {
+    width: 100%;
+    height: auto; /* Maintain aspect ratio */
+}
