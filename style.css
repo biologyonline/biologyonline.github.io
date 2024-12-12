@@ -132,6 +132,11 @@
 	display:none;
 	
 }
+.no-div-border
+{
+       border-width: 0px !important;;
+}
+
 
 .online{
   background-color: #ed5f5fad;
@@ -160,6 +165,8 @@
 }
 .tutor-desc2{
 	font-size: 1rem;
+	text-align: center;
+	font-family: 'Raleway';
 }
   .extra-content {
             display: flex;
@@ -172,7 +179,7 @@
 
         .extra-content p:not(.tutor) {
             align-self: flex-end;
-            text-align: right;
+        
             margin: 0;
         }
 
@@ -182,7 +189,7 @@
         .extra-content {
             margin-top: 20px;
             padding: 10px;
-            border: 1px dashed #ccc;
+            border: 1px dashed #ffffff;
           
            
         }
@@ -455,7 +462,7 @@
 }
 
 .tutor-desc{
- 
+ text-align: center;
    
 }
 
@@ -487,7 +494,11 @@
     font-size: 2rem;
     
 }
-
+.tutor-joinnow{
+	font-family: 'Raleway';
+    font-size: 2rem;
+	margin-top:10px
+}
 
 .contact-btn{
   display: inline-block;
@@ -685,6 +696,8 @@
   z-index: 0;
   width: fit-content;
   box-sizing: border-box;
+  
+  margin-bottom: 50px;
 }
 
 .ribbon-a:before {
@@ -742,3 +755,12 @@
     display: none;
   }
 }
+
+@media (max-width: 768px) {
+        .main-content {
+            flex-direction: column;
+        }
+        .column {
+            margin-bottom: 20px;
+        }
+    }
