@@ -3,6 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
+  <link rel="icon" href="./favicon.ico" type="image/x-icon">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MJ MM</title>
   <style>
@@ -76,6 +77,99 @@
     import nodeMenu from 'https://cdn.jsdelivr.net/npm/@mind-elixir/node-menu@1.0.3/dist/node-menu.js';
     import mindElixirnodeMenuNeo from 'https://cdn.jsdelivr.net/npm/@mind-elixir/node-menu-neo@1.0.4/+esm'
 
+    let defaultData = {
+      "nodeData": {
+        "id": "root",
+        "topic": "Biology Syllabus",
+        "root": true,
+        "children": [
+          {
+            "id": "molecular_biology",
+            "topic": "Molecular Biology and Cell Biology",
+            "tags": ["Molecular Biology", "Cell Biology"],
+            "children": [
+              { "id": "cells", "topic": "Structure and Function of Cells", "tags": ["Cells"] },
+              { "id": "biomolecules", "topic": "Biomolecules", "tags": ["Biochemistry"] },
+              { "id": "enzymes", "topic": "Enzymes", "tags": ["Enzymes"] },
+              { "id": "cell_division", "topic": "Cell Division", "tags": ["Mitosis", "Meiosis"] }
+            ]
+          },
+          {
+            "id": "plant_biology",
+            "topic": "Plant Biology",
+            "tags": ["Botany"],
+            "children": [
+              { "id": "anatomy", "topic": "Plant Anatomy and Morphology", "tags": ["Anatomy"] },
+              { "id": "physiology", "topic": "Plant Physiology", "tags": ["Physiology"] },
+              { "id": "reproduction", "topic": "Plant Reproduction", "tags": ["Reproduction"] }
+            ]
+          },
+          {
+            "id": "genetics_evolution",
+            "topic": "Genetics and Evolution",
+            "tags": ["Genetics", "Evolution"],
+            "children": [
+              { "id": "inheritance", "topic": "Inheritance Patterns", "tags": ["Genetics"] },
+              { "id": "dna_rna", "topic": "DNA and RNA", "tags": ["Molecular Biology"] },
+              { "id": "evolution", "topic": "Evolution", "tags": ["Natural Selection"] }
+            ]
+          },
+          {
+            "id": "human_biology",
+            "topic": "Human Biology",
+            "tags": ["Human Anatomy", "Physiology"],
+            "icons":["🔴🟠🟡🟢🔵🟣"],
+            "children": [
+              { "id": "digestive", "topic": "Digestive System", "tags": ["Digestive"] },
+              { "id": "respiratory", "topic": "Respiratory System", "tags": ["Respiratory"] },
+              { "id": "circulatory", "topic": "Circulatory System", "tags": ["Circulatory"] },
+              { "id": "excretory", "topic": "Excretory System", "tags": ["Excretory"] },
+              { "id": "reproductive", "topic": "Reproductive System", "tags": ["Reproductive"] },
+              { "id": "endocrine", "topic": "Endocrine System", "tags": ["Endocrine"] }
+            ]
+          },
+          {
+            "id": "ecology",
+            "topic": "Ecology and Environmental Biology",
+            "tags": ["Ecology"],
+            "children": [
+              { "id": "ecosystems", "topic": "Ecosystems", "tags": ["Ecosystems"] },
+              { "id": "biodiversity", "topic": "Biodiversity", "tags": ["Conservation"] },
+              { "id": "population", "topic": "Population Ecology", "tags": ["Population Dynamics"] }
+            ]
+          },
+          {
+            "id": "microbiology",
+            "topic": "Microbiology and Immunology",
+            "tags": ["Microbiology", "Immunology"],
+            "children": [
+              { "id": "microorganisms", "topic": "Microorganisms", "tags": ["Microbes"] },
+              { "id": "immunity", "topic": "Immunity", "tags": ["Immunity"] }
+            ]
+          },
+          {
+            "id": "applied_biology",
+            "topic": "Applied Biology",
+            "tags": ["Applications"],
+            "children": [
+              { "id": "biotech", "topic": "Biotechnology", "tags": ["Genetic Engineering"] },
+              { "id": "agriculture", "topic": "Agriculture", "tags": ["Crop Improvement"] },
+              { "id": "medicine", "topic": "Medicine", "tags": ["Healthcare"] }
+            ]
+          },
+          {
+            "id": "practical",
+            "topic": "Practical Component",
+            "tags": ["Laboratory"],
+            "children": [
+              { "id": "skills", "topic": "Laboratory Skills", "tags": ["Techniques"] },
+              { "id": "experiments", "topic": "Key Experiments", "tags": ["Experiments"] }
+            ]
+          }
+        ]
+      }
+    };
+
     let options = {
       el: '#map', // or HTMLDivElement
       direction: MindElixir.SIDE,
@@ -98,7 +192,7 @@
 
     let mind = new MindElixir(options);
 
-    //mind.install(nodeMenu) ;
+
     mind.install(mindElixirnodeMenuNeo);
 
     let data = MindElixir.new('new topic');
@@ -123,11 +217,12 @@
 
     }
 
-    mind.init(data);
+    //mind.init(data);
+    mind.init(defaultData);
     mind.bus.addListener('operation', operation => {
       //console.log(operation) 
       //const data = mind.getData() // javascript object, see src/example.js
-      const data = mind.getDataString() ;// stringify object
+      const data = mind.getDataString();// stringify object
       //console.log(data);
       localStorage.setItem('mjmmkey', data);
       // return {
@@ -199,7 +294,17 @@
       URL.revokeObjectURL(url);
     }
 
+    document.getElementById("myButtonClear").addEventListener("click", handleButtonClickClear);
 
+    async function handleButtonClickClear() {
+      try {
+
+        data = MindElixir.new('new topic');
+        mind.init(data);
+      } catch (error) {
+        console.error("Error during the operation:", error);
+      }
+    }
 
 
   </script>
@@ -217,6 +322,7 @@
       <h1 class="title">Maduravi Jayathilake - Biology</h1>
     </div>
     <div class="header-buttons">
+      <button id="myButtonClear">Clear</button>
       <button id="myButton">Download PNG</button>
       <button id="myButtonSvg">SVG</button>
     </div>
