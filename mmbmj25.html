@@ -36,12 +36,23 @@
     }
 
     .avatar {
-      width: 40px;
-      height: 40px;
+      width: 45px;
+      height: 45px;
       border-radius: 50%;
       object-fit: cover;
       margin-right: 10px;
+
+      border: 2px solid #ffffff;
+      border-radius: 50%;
+      padding: 1px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     }
+
+
+
+
+
+
 
     .title {
       font-size: 18px;
@@ -71,104 +82,15 @@
     rel="stylesheet">
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mind-elixir/node-menu@1.0.3/dist/style.css">
+  <script src="./biology-syllabus.js"></script>
+  <script src="./plant-biology.js"></script>
 
   <script type="module">
     import MindElixir from "https://cdn.jsdelivr.net/npm/mind-elixir@4.3.6/dist/MindElixir.min.js";
     import nodeMenu from 'https://cdn.jsdelivr.net/npm/@mind-elixir/node-menu@1.0.3/dist/node-menu.js';
     import mindElixirnodeMenuNeo from 'https://cdn.jsdelivr.net/npm/@mind-elixir/node-menu-neo@1.0.4/+esm'
 
-    let defaultData = {
-      "nodeData": {
-        "id": "root",
-        "topic": "Biology Syllabus",
-        "root": true,
-        "children": [
-          {
-            "id": "molecular_biology",
-            "topic": "Molecular Biology and Cell Biology",
-            "tags": ["Molecular Biology", "Cell Biology"],
-            "children": [
-              { "id": "cells", "topic": "Structure and Function of Cells", "tags": ["Cells"] },
-              { "id": "biomolecules", "topic": "Biomolecules", "tags": ["Biochemistry"] },
-              { "id": "enzymes", "topic": "Enzymes", "tags": ["Enzymes"] },
-              { "id": "cell_division", "topic": "Cell Division", "tags": ["Mitosis", "Meiosis"] }
-            ]
-          },
-          {
-            "id": "plant_biology",
-            "topic": "Plant Biology",
-            "tags": ["Botany"],
-            "children": [
-              { "id": "anatomy", "topic": "Plant Anatomy and Morphology", "tags": ["Anatomy"] },
-              { "id": "physiology", "topic": "Plant Physiology", "tags": ["Physiology"] },
-              { "id": "reproduction", "topic": "Plant Reproduction", "tags": ["Reproduction"] }
-            ]
-          },
-          {
-            "id": "genetics_evolution",
-            "topic": "Genetics and Evolution",
-            "tags": ["Genetics", "Evolution"],
-            "children": [
-              { "id": "inheritance", "topic": "Inheritance Patterns", "tags": ["Genetics"] },
-              { "id": "dna_rna", "topic": "DNA and RNA", "tags": ["Molecular Biology"] },
-              { "id": "evolution", "topic": "Evolution", "tags": ["Natural Selection"] }
-            ]
-          },
-          {
-            "id": "human_biology",
-            "topic": "Human Biology",
-            "tags": ["Human Anatomy", "Physiology"],
-            "icons":["🔴🟠🟡🟢🔵🟣"],
-            "children": [
-              { "id": "digestive", "topic": "Digestive System", "tags": ["Digestive"] },
-              { "id": "respiratory", "topic": "Respiratory System", "tags": ["Respiratory"] },
-              { "id": "circulatory", "topic": "Circulatory System", "tags": ["Circulatory"] },
-              { "id": "excretory", "topic": "Excretory System", "tags": ["Excretory"] },
-              { "id": "reproductive", "topic": "Reproductive System", "tags": ["Reproductive"] },
-              { "id": "endocrine", "topic": "Endocrine System", "tags": ["Endocrine"] }
-            ]
-          },
-          {
-            "id": "ecology",
-            "topic": "Ecology and Environmental Biology",
-            "tags": ["Ecology"],
-            "children": [
-              { "id": "ecosystems", "topic": "Ecosystems", "tags": ["Ecosystems"] },
-              { "id": "biodiversity", "topic": "Biodiversity", "tags": ["Conservation"] },
-              { "id": "population", "topic": "Population Ecology", "tags": ["Population Dynamics"] }
-            ]
-          },
-          {
-            "id": "microbiology",
-            "topic": "Microbiology and Immunology",
-            "tags": ["Microbiology", "Immunology"],
-            "children": [
-              { "id": "microorganisms", "topic": "Microorganisms", "tags": ["Microbes"] },
-              { "id": "immunity", "topic": "Immunity", "tags": ["Immunity"] }
-            ]
-          },
-          {
-            "id": "applied_biology",
-            "topic": "Applied Biology",
-            "tags": ["Applications"],
-            "children": [
-              { "id": "biotech", "topic": "Biotechnology", "tags": ["Genetic Engineering"] },
-              { "id": "agriculture", "topic": "Agriculture", "tags": ["Crop Improvement"] },
-              { "id": "medicine", "topic": "Medicine", "tags": ["Healthcare"] }
-            ]
-          },
-          {
-            "id": "practical",
-            "topic": "Practical Component",
-            "tags": ["Laboratory"],
-            "children": [
-              { "id": "skills", "topic": "Laboratory Skills", "tags": ["Techniques"] },
-              { "id": "experiments", "topic": "Key Experiments", "tags": ["Experiments"] }
-            ]
-          }
-        ]
-      }
-    };
+
 
     let options = {
       el: '#map', // or HTMLDivElement
@@ -217,8 +139,8 @@
 
     }
 
-    //mind.init(data);
-    mind.init(defaultData);
+    mind.init(data);
+
     mind.bus.addListener('operation', operation => {
       //console.log(operation) 
       //const data = mind.getData() // javascript object, see src/example.js
@@ -246,7 +168,7 @@
         if (!blobX) return;
 
         downloadBlob(blobX, "filename.png");
-        alert("Button clicked!");
+        alert("png file download completed!");
       } catch (error) {
         console.error("Error during the operation:", error);
       }
@@ -278,7 +200,7 @@
           downloadBlobSvg(svgBlob, "filename.svg");
         }
 
-        alert("Downloads completed!");
+        alert("svg file download completed!");
       } catch (error) {
         console.error("Error during the operation:", error);
       }
@@ -294,25 +216,131 @@
       URL.revokeObjectURL(url);
     }
 
-    document.getElementById("myButtonClear").addEventListener("click", handleButtonClickClear);
+    document.getElementById("myButtonClear").addEventListener("click", handleButtonClickExport);
+
+
+    async function handleButtonClickExport() {
+      try {
+
+        const mindmapData = mind.getData() // javascript object, see src/example.js
+        const data2 = mind.getDataString();
+        console.log(data2);
+        const newNodeDataString = mind.getDataString();
+        const jsonString = JSON.stringify(mindmapData, null, 2);
+
+        // Generate current timestamp in yyyyMMddHHmmss format
+        const currentDate = new Date();
+        const year = currentDate.getFullYear();
+        const month = String(currentDate.getMonth() + 1).padStart(2, '0');  // Month is 0-indexed
+        const day = String(currentDate.getDate()).padStart(2, '0');
+        const hours = String(currentDate.getHours()).padStart(2, '0');
+        const minutes = String(currentDate.getMinutes()).padStart(2, '0');
+        const seconds = String(currentDate.getSeconds()).padStart(2, '0');
+
+        const timestamp = `${year}-${month}-${day}-${hours}${minutes}${seconds}`;
+        const filename = `data-${timestamp}`;  // Construct filename
+
+        // Logic to download or handle the file
+        const blob = new Blob([jsonString], { type: "application/json" });
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = filename + ".json";  // Append .json to the filename
+        link.click();
+
+
+      } catch (error) {
+        console.error("Error during the operation:", error);
+      }
+    }
 
     async function handleButtonClickClear() {
       try {
 
-        data = MindElixir.new('new topic');
-        mind.init(data);
+        var newNode = MindElixir.new('new topic');
+        mind.init(newNode);
+        const newNodeDataString = mind.getDataString();
+        localStorage.setItem('mjmmkey', newNodeDataString);
       } catch (error) {
         console.error("Error during the operation:", error);
       }
     }
 
 
+    // Add click event listeners to the template options
+    document.getElementById('template-option1').addEventListener('click', function () {
+      handleButtonClickClear();
+    });
+
+    document.getElementById('template-option2').addEventListener('click', function () {
+
+      mind.init(biologySyllabus);
+
+    });
+
+    document.getElementById('template-option3').addEventListener('click', function () {
+      try {
+
+        const savedData = localStorage.getItem('mjmmkey');
+        if (plantBiology) {
+          // If valid data exists, parse it
+          // data = JSON.parse(plantBiology);
+          mind.init(plantBiology);
+        } else {
+
+        }
+      } catch (error) {
+        console.error('Error loading data:', error);
+        // On error, initialize with new topic
+        const data = MindElixir.new('new topic');
+        console.log('Initialized with new topic due to error.');
+
+      }
+    });
+
   </script>
 
 
 
-  <!-- <script src="https://cdn.jsdelivr.net/npm/@mind-elixir/node-menu-neo@1.0.4/+esm"></script> -->
+  <style>
+    /* .dropbtn {
+    background-color: #04AA6D;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+  }
+  */
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
 
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #f1f1f1;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+      z-index: 1;
+    }
+
+    .dropdown-content a {
+      color: black;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+    }
+
+    .dropdown-content a:hover {
+      background-color: #ddd;
+    }
+
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+
+    /* .dropdown:hover .dropbtn {background-color: #3e8e41;} */
+  </style>
 </head>
 
 <body>
@@ -322,7 +350,15 @@
       <h1 class="title">Maduravi Jayathilake - Biology</h1>
     </div>
     <div class="header-buttons">
-      <button id="myButtonClear">Clear</button>
+      <div class="dropdown">
+        <button class="dropbtn">Template</button>
+        <div class="dropdown-content">
+          <a href="#" id="template-option1">New</a>
+          <a href="#" id="template-option2">Syllabus</a>
+          <a href="#" id="template-option3">Plant Biology</a>
+        </div>
+      </div>
+      <button id="myButtonClear">Export</button>
       <button id="myButton">Download PNG</button>
       <button id="myButtonSvg">SVG</button>
     </div>
