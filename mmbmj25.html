@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>External JavaScript</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body,
+    html {
+      height: 100%;
+      font-family: Arial, sans-serif;
+    }
+
+    header {
+      width: 100%;
+      height: 60px;
+      background-color: #f4f4f4;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      border-bottom: 1px solid #ccc;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+    }
+
+    .avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-right: 10px;
+    }
+
+    .title {
+      font-size: 18px;
+
+      color: #333;
+      font-family: "Raleway", serif;
+    }
+
+    .header-buttons button {
+      margin-left: 10px;
+      padding: 10px 15px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    #map {
+      height: calc(100% - 50px);
+      /* Fill the remaining screen height */
+      background-color: #eaeaea;
+      /* Optional: Gives a visual background for #map */
+      overflow: hidden;
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mind-elixir/node-menu@1.0.3/dist/style.css">
+
+  <script type="module">
+    import MindElixir from "https://cdn.jsdelivr.net/npm/mind-elixir@4.3.6/dist/MindElixir.min.js";
+    import nodeMenu from 'https://cdn.jsdelivr.net/npm/@mind-elixir/node-menu@1.0.3/dist/node-menu.js';
+    import mindElixirnodeMenuNeo from 'https://cdn.jsdelivr.net/npm/@mind-elixir/node-menu-neo@1.0.4/+esm'
+
+    let options = {
+      el: '#map', // or HTMLDivElement
+      direction: MindElixir.SIDE,
+      draggable: true, // default true
+      contextMenu: true, // default true
+      toolBar: true, // default true
+      nodeMenu: true, // default true
+      keypress: true, // default true
+      locale: 'en', // [zh_CN,zh_TW,en,ja,pt,ru] waiting for PRs
+      overflowHidden: false, // default false
+      mainLinkStyle: 1, // [1,2] default 1
+      mouseSelectionButton: 0, // 0 for left button, 2 for right button, default 0
+      contextMenuOption: {
+        focus: true,
+        link: true,
+
+      },
+
+    }
+
+    let mind = new MindElixir(options);
+
+    //mind.install(nodeMenu) ;
+    mind.install(mindElixirnodeMenuNeo);
+
+    let data = MindElixir.new('new topic');
+    // mind.init(data);
+
+
+    try {
+      // Attempt to retrieve data from localStorage
+      const savedData = localStorage.getItem('mjmmkey');
+      if (savedData && savedData.trim()) {
+        // If valid data exists, parse it
+        data = JSON.parse(savedData);
+        console.log('Loaded data from localStorage:', data);
+      } else {
+        console.log('No data found in localStorage, initialized with new topic.');
+      }
+    } catch (error) {
+      console.error('Error loading data:', error);
+      // On error, initialize with new topic
+      const data = MindElixir.new('new topic');
+      console.log('Initialized with new topic due to error.');
+
+    }
+
+    mind.init(data);
+    mind.bus.addListener('operation', operation => {
+      //console.log(operation) 
+      //const data = mind.getData() // javascript object, see src/example.js
+      const data = mind.getDataString() ;// stringify object
+      //console.log(data);
+      localStorage.setItem('mjmmkey', data1);
+      // return {
+      //   name: action name,
+      //   obj: target object
+      // }
+      // name: [insertSibling|addChild|removeNode|beginEdit|finishEdit]
+      // obj: target
+
+      // name: moveNode
+      // obj: {from:target1,to:target2}
+    })
+
+    mind.toCenter();
+    document.getElementById("myButton").addEventListener("click", handleButtonClick);
+
+    // Handle button click event
+    async function handleButtonClick() {
+      try {
+        const blobX = await mind.exportPng(); // Get a Blob!
+        if (!blobX) return;
+
+        downloadBlob(blobX, "filename.png");
+        alert("Button clicked!");
+      } catch (error) {
+        console.error("Error during the operation:", error);
+      }
+    }
+
+    // Function to download a Blob as a file
+    function downloadBlob(blob, filename) {
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = filename;
+      a.click();
+      URL.revokeObjectURL(url);
+
+
+
+
+
+
+    }
+    document.getElementById("myButtonSvg").addEventListener("click", handleButtonClickSvg);
+
+    async function handleButtonClickSvg() {
+      try {
+
+        // Handle SVG download
+        const svgBlob = mind.exportSvg(); // Get a Blob for SVG
+        if (svgBlob) {
+          downloadBlobSvg(svgBlob, "filename.svg");
+        }
+
+        alert("Downloads completed!");
+      } catch (error) {
+        console.error("Error during the operation:", error);
+      }
+    }
+
+    // Function to download a Blob as a file
+    function downloadBlobSvg(blob, filename) {
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = filename;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+
+
+
+  </script>
+
+
+
+  <!-- <script src="https://cdn.jsdelivr.net/npm/@mind-elixir/node-menu-neo@1.0.4/+esm"></script> -->
+
+</head>
+
+<body>
+  <header>
+    <div class="header-left">
+      <img src="./IP.png" alt="Avatar" class="avatar">
+      <h1 class="title">Maduravi Jayathilake - Biology</h1>
+    </div>
+    <div class="header-buttons">
+      <button id="myButton">Download PNG</button>
+      <button id="myButtonSvg">SVG</button>
+    </div>
+  </header>
+  <div id="map"></div>
+
+  <script type="module" src="./scripts.js"></script>
+
+</body>
+
+</html>
