@@ -1052,7 +1052,7 @@ color: #fff;
 	  
 
       &::after {
-        right: calc(var(--item-width) + 18px);
+        right: calc(var(--item-width) + 16px);
       }
     }
   }
