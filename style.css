@@ -970,7 +970,7 @@ color: #fff;
 /* TIMELINE */
 #timeline-container {
   overflow: auto;
-  padding: 60px 0;
+  padding: 60px 5px;
 
   .inner-container {
     max-width: 1000px;
@@ -1043,7 +1043,8 @@ color: #fff;
     margin: 0 auto;
     position: relative;
     left: 35px;
-
+    padding-left: 35px;
+    }
     .timeline-item {
       font-size: 1.1rem;
 	  text-align: left;
